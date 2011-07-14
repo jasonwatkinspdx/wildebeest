@@ -1,5 +1,5 @@
 # Wildebeest
-## Migrate herds of servers
+Migrate herds of servers
 
 ## Design assumptions
 * systems of 1-100 servers
@@ -7,6 +7,7 @@
 
 ## Design constraints
 * Migrations are written in ruby
+  * With helpful APIs for package manipulation, init.d management, etc
 * Migrations are written against a single Role
 * A Host is tagged with a list of Roles
 * Migrations assumes a basic rolling pattern: leave load, update, rejoin
@@ -14,7 +15,8 @@
   * Instead blocks are written against roles
       * eg roles[:database].each do |server| ...
   * If actually needed, can emulate via Roles
-* Hosts are identified by UUID's
+* Hosts are identified by UUIDs
+  * But users never deal in UUIDs
 * Migrations are identified by git sha1
 * State of a host is the sha1 of the last migration completed
 * Migrations form a strict chain with no skipping, diverging or merging
@@ -30,6 +32,7 @@
 ## Open problems
 * Handling coordination of divergence
   * restoring a host from an old migration state might require different waiting behavior
+* How to handle host specific configuration like setting IP, hostname, etc
 
 ## Simple model
 
